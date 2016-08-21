@@ -64,13 +64,18 @@ def any3(lst,a=None,b=None,c=None,it = same,retries=10):
 
 @ok
 def _ok1():
-  "Can at least one test fail?"
-  assert 1==2, "equality failure"
+  "Can at least one test pass?"
+  try:
+    assert 1==2
+  except:
+    print ("equality failure")
+  else:
+    print ("equality pass")
 
 @ok
 def _ok2():
-  "Can at least one test pass?"
-  assert 1==1, "equality failure"
+  "Can at least one test fail?"
+  assert 1==2, "equality failure"
 
 @ok
 def _any3():
@@ -84,5 +89,3 @@ def _any3():
   for k,v in seen.items():
     assert v < 2
   print("")
- 
-oks()

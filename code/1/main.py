@@ -1,4 +1,4 @@
-import utest, jjose
+import utest, jjose, aaugust4
 
 @utest.ok
 def test_one():
@@ -8,4 +8,8 @@ def test_one():
   print 'actual member one: ' + actual_mem_1
   assert expected_mem_1 == actual_mem_1
 
-utest.oks()
+@utest.ok
+def test_two():
+  assert True == aaugust4.testTrue("true")
+
+utest.oks();
