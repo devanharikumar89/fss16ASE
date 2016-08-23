@@ -34,3 +34,8 @@ Wordpress - Opensource android blogging software with broad user community with 
 
 ## Statistical Tests
 Implemented the AndroidRipper using the Robotium Framework and by the Android Instrumentation class.
+Metrics Used :
+
+   * Defect Detection Effectiveness
+   * Code Coverage Metric
+   * Time(Resource) spent
