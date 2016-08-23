@@ -25,6 +25,5 @@ An activity represents a single screen with a user interface. For example, an em
     * lack of cost-effective approaches for development and
     * defining suitable techniques and tools for testing
 
-
- 
-
+## Baseline results
+Monkey execution for __4.46 hours__ firing __45,000 events__ with the default value of event type statistical distribution finding __3 crashes__ reaching __25.27 % LOC coverage__.
