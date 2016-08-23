@@ -27,3 +27,8 @@ An activity represents a single screen with a user interface. For example, an em
 
 ## Baseline results
 Monkey execution for __4.46 hours__ firing __45,000 events__ with the default value of event type statistical distribution finding __3 crashes__ reaching __25.27 % LOC coverage__.
+
+## Sampling Procedure 
+Monkey - Chosen because that was the only non-commercial automated android testing tool "to the best of author's knowledge"
+Wordpress - Opensource android blogging software with broad user community with an issue tracking system
+
