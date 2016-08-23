@@ -1,4 +1,4 @@
-import utest, jjose, aaugust4
+import utest, jjose, aaugust4, dhariku
 
 @utest.ok
 def test_one():
@@ -12,4 +12,7 @@ def test_one():
 def test_two():
   assert True == aaugust4.testTrue("true")
 
+@utest.ok
+def test_three():
+  assert dhariku.testPrime(17)
 utest.oks();
