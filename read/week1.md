@@ -32,3 +32,5 @@ Monkey execution for __4.46 hours__ firing __45,000 events__ with the default va
 Monkey - Chosen because that was the only non-commercial automated android testing tool "to the best of author's knowledge"
 Wordpress - Opensource android blogging software with broad user community with an issue tracking system
 
+## Statistical Tests
+Implemented the AndroidRipper using the Robotium Framework and by the Android Instrumentation class.
