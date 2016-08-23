@@ -14,4 +14,17 @@ The GUI exploration decides whether GUI exploration using a particular input is 
 #### Activity Component : 
 An activity represents a single screen with a user interface. For example, an email app might have one activity that shows a list of new emails, another activity to compose an email, and another activity for reading emails. Although the activities work together to form a cohesive user experience in the email app, each one is independent of the others. As such, a different app can start any one of these activities (if the email app allows it). [Activity](https://developer.android.com/guide/components/fundamentals.html)
 
+## Scope for improvement :
+ Even though the AndroidRipper has exhibited a tremendous improvement over the Monkey tool, it appears that the comparison is done solely for one software. The paper does not compare AndroidRipper with any other software nor does it provide an analysis of any other android app (other than Wordpress). So there is evidently a lack of data to support the claim that AndroidRipper is the best tool.
+ 
+ Also, another scope for improvement would be augmenting the tool's capabilities to find logical(Semantic) bugs as well.
+ 
+ ## Motivation
+ As of 2011, the android share of the smartphone market was over 52.5% which was double what it was in 2010. The android market exceeded 10 billion app downloads with a growth rate of 1 billion app downloads per month. A few problems ever since the boom of the smartphone industry from a software engineering perspective are 
+ 
+    * lack of cost-effective approaches for development and
+    * defining suitable techniques and tools for testing
+
+
+ 
 
