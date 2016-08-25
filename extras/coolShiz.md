@@ -37,5 +37,6 @@ Professor's way:
 
 from __future__ import division 
 result = 1/2
-# print(result)
-# 0.5
+
+print(result)
+Ans : 0.5
