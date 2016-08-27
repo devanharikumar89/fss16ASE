@@ -23,7 +23,7 @@ def square(t,l):
 def arc(t,r,arc):
   """ Draw an arc of radius r, degree "arc" using turtle t
   """
-  t.delay = 0.01
+  t.delay = 0.001
   n = int(20*math.pi*r)
   rt(t, arc/2*n)
   polygon(t,0.1,n,arc)
@@ -56,6 +56,20 @@ def pie(t,l,n):
     fd(t,l/2)
   bk(t,l/2)
 
+def drawPetals(t, radius, angle):
+  """Draws a petal using two arcs"""
+  arc(t, radius, angle)
+  rt(t, 180-angle)
+  arc(t, radius, angle)
+  rt(t, 180-angle)
+
+def flower(t, radius, petals, angle):
+  """Draws a flower given the number of petals, angle and radius of each arc """
+  for _ in xrange(petals):
+    drawPetals(t, radius, angle)
+    rt(t, 360/petals)
+    
+
 def exercise_4_0(bob,rad):
   """ Test the square, polygon, circle and arc functions
   """
@@ -67,6 +81,19 @@ def exercise_4_0(bob,rad):
 def exercise_4_2(bob):
   """ General set of functions that can draw flowers
   """
+  bob.delay = 0
+  pu(bob)
+  rt(bob)
+  fd(bob, 500)
+  flower(bob, 60, 7, 360/7)
+  pu(bob)
+  lt(bob)
+  fd(bob, 200)
+  flower(bob, 60, 10, 45)
+  pu(bob)
+  lt(bob)
+  fd(bob, 200)
+  flower(bob, 75, 7, 100)
   return
 
 def exercise_4_3(bob,alice,rad):
@@ -95,9 +122,10 @@ if __name__ == '__main__':
   world = TurtleWorld()
   bob = Turtle()
   alice = Turtle()
+  carl = Turtle()
   rad = 80
   #exercise_4_0(bob,rad)
-  exercise_4_2(bob)
+  exercise_4_2(carl)
   exercise_4_3(bob,alice,rad)
 
 
