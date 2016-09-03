@@ -1,5 +1,5 @@
-# [Using GUI Ripping for Automated Testing of Android Applications by Domenico Amalfitano, Anna Rita Fasolina, Porfirio Tramontana, and Salvatore De Carmine, Atif M. Memon
-Proceedings of the 27th IEEE/ACM International Conference on Automated Software Engineering](https://cgis.cs.umd.edu/~atif/papers/AmalfitanoASE2012.pdf)
+# [Using GUI Ripping for Automated Testing of Android Applications by Domenico Amalfitano, Anna Rita Fasolina, Porfirio Tramontana, and Salvatore De Carmine, Atif M. Memon](https://cgis.cs.umd.edu/~atif/papers/AmalfitanoASE2012.pdf)
+Proceedings of the 27th IEEE/ACM International Conference on Automated Software Engineering
 
 ## Key Words
 
