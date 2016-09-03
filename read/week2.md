@@ -13,7 +13,7 @@ The GUI
 An activity
  
 ## Motivation
-
+Android is a popular mobile platform with more than 50% market share and reliability of the applications on the platform are getting increasingly important. Owing to the GUI oriented application construction paradigm of android and its novelty, many existing andriod software correctness issues fall outside the scope of traditional verification techniques. The study aims to automate andriod testing so as to detect more bugs and increase the quality of developed software.
 
 ## Baseline results
 
