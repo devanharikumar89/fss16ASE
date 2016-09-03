@@ -1,4 +1,4 @@
-# Automating GUI testing for Android applications
+# [[http://www.cs.ucr.edu/~neamtiu/pubs/ast11hu.pdf][Automating GUI testing for Android applications]
 
 ## Key Words
 
