@@ -27,7 +27,10 @@ The following criteria were taken into account while sampling the apps:
   * High download counts
   * High bug category coverage
 
-## Statistical Tests
+## Related Work
+  * Android verification: Kirin, a logic based tool for android that ensures permissions needed by a certain andrioid application are met by a global safety invariance. Saint enforces OS level data for security. Taintdroid: checks data misuse during runtime for an android application.
+  * Gui Testing: Kervinen et. al.: model tests mobile applications running on symbian platform. Guitar: Gui testing framework for java and windows applications.
+  * Android Bug Studies: Maji et. al. failure characterization study found that defect density tends to be lowest in the OS, higher in the middleware, and highest in core applications.
 
 
 ## Scope for improvement :
