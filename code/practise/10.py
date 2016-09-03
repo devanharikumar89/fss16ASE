@@ -3,6 +3,7 @@
 
 def print_nest_list(a):
   # noinspection PyBroadException
+  print "Print_net_list"
   try:
     for e in a:
       for x in e:
@@ -34,7 +35,7 @@ def capitalize_all(t):
   for s in t:
     try:
       res.append(s.capitalize())
-    except TypeError:
+    except AttributeError:
       print "Skipping element since its not a string"
   return res
 
@@ -56,16 +57,15 @@ def middle(a):
 
 
 def chop(a):
-  if len(a) < 3:
-    a = []
-  else:
+  length = len(a)
+  if length > 0:
     del a[0]
+  if length > 0:
     del a[-1]
-
   return None
 
-l = [[1, 2, 'zebra'], [4, 3, 'a', 5]]
-nested_sum(l, True)
+l = [[1, 2, 'zebra'], [4, 3, 'a', 5], [1]]
+nested_sum(l, False)
 print cap_nested(l)
 middle(l)
 chop(l)
