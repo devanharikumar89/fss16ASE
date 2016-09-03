@@ -31,4 +31,4 @@ The following criteria were taken into account while sampling the apps:
 
 
 ## Scope for improvement :
-Though the technique demonstrates considerable improvement over Monkey tool, the paper doesnot involve any associated data like code coverage, that would help identify the shortcomings and better the results.
+Though the technique demonstrates considerable improvement over Monkey tool, the paper doesnot involve any associated data like code coverage, that would help identify the shortcomings and better the results. Also, the technique might actually be using considerably more resources like computing power and time to get to the results that it got. The paper should add these data to the results so that their results are more solid.
