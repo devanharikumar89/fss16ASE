@@ -19,7 +19,13 @@ Android is a popular mobile platform with more than 50% market share and reliabi
 The technique tries to detect bugs classified into three broad categories: activity bugs, event bugs, and type errors. It detected all 8 previously reported activity bugs and 3 new ones. It also detected 18/21 old event bugs and 6 new ones, and attribute the three missing older bugs to spurious reporting of older bugs. It detected all 4 old type errors, but no new ones.
 
 ## Sampling Procedure 
-
+The following criteria were taken into account while sampling the apps:
+  * Popularity
+  * Long lifetime
+  * Detailed bug history
+  * Open-source source code
+  * High download counts
+  * High bug category coverage
 
 ## Statistical Tests
 
