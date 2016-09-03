@@ -25,3 +25,4 @@ The technique tries to detect bugs classified into three broad categories: activ
 
 
 ## Scope for improvement :
+Though the technique demonstrates considerable improvement over Monkey tool, the paper doesnot involve any associated data like code coverage, that would help identify the shortcomings and better the results.
