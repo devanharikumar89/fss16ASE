@@ -8,6 +8,7 @@ License: GNU GPLv3 http://www.gnu.org/licenses/gpl.html
 """
 from __future__ import division, print_function
 from Card import *
+import sys
 
 
 
@@ -60,8 +61,7 @@ class PokerHand(Hand):
         for val in self.ranks.values():
             if val >= 2:
                 return True
-            else:
-                return False
+        return False
 
     def has_two_pair(self):
         """Returns True if the hand has two pairs, False otherwise.
@@ -169,25 +169,31 @@ class PokerHand(Hand):
         for _key in indices:
             if method_map[_key]():
                 self.label = label_map[_key]
-                print (self.label)
                 return
-        self.label = 'NONE'
+        self.label = 'HIGH_CARD'
 
 simulation_map = {}
-def deal(simulations):
+
+
+def deal(simulations, game):
     for _ in xrange(simulations):
         deck = Deck()
         deck.shuffle()
         hand = PokerHand()
-        deck.move_cards(hand, 5)
+        deck.move_cards(hand, game)
         hand.classify()
         simulation_map[hand.label]=simulation_map.get(hand.label, 0)+1
-    #print simulation_map
     for key in simulation_map:
         print (key, " : ", (100*simulation_map[key])/(simulations), "%")
 
 if __name__ == '__main__':
-    deal(5000000)
+    if len(sys.argv) < 3:
+        print("Usage : python <file> <5 or 7> <simulations>\n")
+        sys.exit(0)
+    simulations = int(sys.argv[2])
+    game = int(sys.argv[1])
+
+    deal(simulations, game)
 
 
 
