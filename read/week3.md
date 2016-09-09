@@ -29,7 +29,12 @@ This means that the application/developer has limited ability thereafter to gove
 Thus, a necessary utility needs to be developed for applications to assert and control the security decisions on the platform.
 
 ## Sampling Procedure 
-
+A fictitious PersonalShopper smart-phone shopping application was chosen for explaining the drawbacks of the current Android Security Framework. This application was expected to enforce the following:
+* use only trusted payment services.
+* restricts the use of services to safe networks.
+* works only with approved versions of certain applications.
+* ensure transaction information is not leaked to the phone's ledger application.
+* allow other applications to place security restrictions on PersonalShopper.
 
 ## Related Work
 Security Permissions to applications can be validated during install time or during run-time. Systems for run-time validation of Security Permissions are not very developed. Frameworks which validate permissions during install time are:
