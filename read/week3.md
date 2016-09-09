@@ -42,3 +42,4 @@ Security Permissions to applications can be validated during install time or dur
 The idea is to convert Saint from a research system to a viable framework for Android Devices. In order to do that more applications and the protection policies they require needs to be integrated into the system. The Saint policies to protect the phone system services and the cellular network needs to be extended too.
 
 ## Scope for improvement :
+Even though the paper demonstrates a new Framework for addressing the security limitations in Android devices, it fails to depict the impact of this new Framework. The paper does not mention any experiments conducted on this new framework. It would have been nice to test for security issues in different applications with the existing framework and then compare the results with Saint.
