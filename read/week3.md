@@ -34,7 +34,11 @@ Thus, a necessary utility needs to be developed for applications to assert and c
 
 
 ## Related Work
-
+Security Permissions to applications can be validated during install time or during run-time. Systems for run-time validation of Security Permissions are not very developed. Frameworks which validate permissions during install time are:
+* Kirin - enforces install policies that validate if the permissions requested by applications are consistent with the System policies.
+* Open Mobile Terminal Platform - determines an application's access rights based on its origin.
+* Symbian framework prevents unsigned applications from accessing 'protected' interfaces.
+* MIDP 2.0 Security Framework relies on the Mobile Information Device Profile implementor in giving access.
 
 
 ## Scope for improvement :
