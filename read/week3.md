@@ -28,8 +28,6 @@ Applications statically identify the permissions that govern the rights to their
 This means that the application/developer has limited ability thereafter to govern to whom those rights are given or how they are later exercised.
 Thus, a necessary utility needs to be developed for applications to assert and control the security decisions on the platform.
 
-## Baseline results
-
 ## Sampling Procedure 
 
 
@@ -40,5 +38,7 @@ Security Permissions to applications can be validated during install time or dur
 * Symbian framework prevents unsigned applications from accessing 'protected' interfaces.
 * MIDP 2.0 Security Framework relies on the Mobile Information Device Profile implementor in giving access.
 
+## Future Work
+The idea is to convert Saint from a research system to a viable framework for Android Devices. In order to do that more applications and the protection policies they require needs to be integrated into the system. The Saint policies to protect the phone system services and the cellular network needs to be extended too.
 
 ## Scope for improvement :
