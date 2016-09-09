@@ -18,8 +18,8 @@ It extends the existing Android security architecture with policies for applicat
   * Administrative: An administrative policy dictates how policy itself can be changed.
   * Operational: This section defines policies that detect when Saint renders an application inefficient, faulty, or inoperable, so that by restricting access to interfaces, Saint doesn't hamper utility. Past security measures that have prevented application behavior in an opaque and ambiguous way have not fared well
 
-#### JUnit : 
-
+#### [Intent](https://developer.android.com/reference/android/content/Intent.html) : 
+An Intent provides a facility for performing late runtime binding between the code in different applications. Its most significant use is in the launching of activities, where it can be thought of as the glue between activities. It is basically a passive data structure holding an abstract description of an action to be performed.
  
 ## Motivation
 Smartphones are now ubiquitous even though they are new systems whose security infrastructure is largely underdeveloped.
