@@ -1,5 +1,5 @@
 #! /usr/bin/python
-import random
+import random, copy
 
 """
 quot, rem = divmod(7, 3)
@@ -157,6 +157,50 @@ def most_frequent(st):
     print ""
   return None
 
+
+class Time(object):
+  """
+  Represents time in hours, minutes, seconds in 24hr format
+  """
+  def __init__(self, h=0, m=0, s=0):
+    self.h = h
+    self.m = m
+    self.s = s
+    self.valid_time()
+
+  def valid_time(self):
+    assert self.h < 24 and self.m < 60 and self.s < 60
+    assert self.h > 0 and self.m > 0 and self.s > 0
+
+  def time2int(self):
+    return self.s + 60 * (self.m + 60*self.h)
+
+  def print_time(self):
+    return 'Time = %.2d:%.2d:%.2d' % (self.h, self.m, self.s)
+
+  def is_after(self, time2):
+    assert time2.h > 0 and time2.m > 0 and time2.s > 0, 'Negative time error'
+    return self.h > time2.h or self.h == time2.h and (self.m > time2.m or self.m == time2.m and self.s > time2.s)
+
+  def sum(self, time2):
+    time_sum = copy.copy(self)
+    carry, time_sum.s = divmod((time_sum.s + time2.s), 60)
+    # print carry, time_sum.m, time2.m
+    carry, time_sum.m = divmod((time_sum.m + time2.m + carry), 60)
+    # print carry, time_sum.h, time2.h
+    time_sum.h = (time_sum.h + time2.h + carry) % 24
+    return time_sum
+
+  def minus(self, time2):
+    minus = (self.time2int() - time2.time2int())
+    return int2time(minus) if minus > 0 else Time(0, 0, 0)
+
+
+def int2time(sec):
+  assert sec > 0
+  return
+
+
 l = [[1, 2, 'zebra'], [4, 3, 'a', 5], [1]]
 word_s = 'The quick brown fox jumped over the lazy dog'
 word_l = word_s.split()
@@ -175,3 +219,8 @@ print(invert_dict(histogram('abracadabra')))
 print fib(32)
 print length_sort(word_l)
 print most_frequent(words)
+mytime = Time(1, 2, 3)
+print mytime.print_time()
+print mytime.is_after(Time(1, 2, 3))
+sumtime = mytime.sum(Time(23, 59, 59))
+print sumtime.print_time()
