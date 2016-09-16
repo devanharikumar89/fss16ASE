@@ -36,7 +36,7 @@ def neighbor(x):
 
 
 def prob(old, new, t):
-  # return math.e ** ((old - new) / t)
+  # return math.e ** ((old - new) / (t + 0.001))
   return 0.9
 
 
@@ -53,15 +53,13 @@ def run_init():
 
 
 def run_sa():
-  x, k, kmax = 0, 0, 1000
+  x, k, kmax = 0, 1, 1000
   e = E(x)
   xb, eb = x, e
   global emax
   emax = E(minim) - 0.002
+  print ',', repr(k).rjust(3), repr(e).rjust(23), repr(float(k) / kmax).ljust(5),
   while k < kmax and e > emax:
-    if not k%25:
-      print ""
-      print ',', k, e,
     xn = neighbor(x)
     en = E(xn)
     if en < eb:         # New Best
@@ -70,12 +68,15 @@ def run_sa():
     if en < e:          # Jump to better
       x, e = xn, en
       print '+',
-    elif random.random() > prob(e, en, float(k)/kmax): # Jump to worse
+    elif random.random() > prob(e, en, float(k)/kmax):  # Jump to worse
       x, e = xn, en
       print '?',
     else:
       print '.',
     k += 1
+    if not k % 25 and k != 1000:
+      print ""
+      print ',', repr(k).rjust(3), repr(e).rjust(23), repr(float(k) / kmax).ljust(5),
   print ""
   return xb
 
