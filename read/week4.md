@@ -1,50 +1,36 @@
-# [Semantically Rich Application-Centric Security in Android](http://www.enck.org/pubs/acsac09.pdf)
+# [Reverse Engineering Finite State Machines from Rich Internet Applications](http://ieeexplore.ieee.org/document/4656395/)
 
 ## Key Words
 
-#### Application (Security) Policies :
-Policies specified as part of Android framework that takes care of security in the system. They can govern a myriad of areas like what applications can be installed, which other applications or user can have access to what data inside another app, to whom to provide access to ones own interface and how to continue monitor fair and secure usage of the interface.
+####  RIA : Rich Internet Applications
+New generation of web applications offering greater usability and  interactivity than traditional ones, while at the same time suffering from a serious problem of lack of suitable software models to fit into.
 
-#### Secure Application INTeraction (Saint) framework:
-It extends the existing Android security architecture with policies for applications that address some key application requirements like:
-  * Control to whom permissions to use its interface can be granted,
-  * Control how its interfaces can be used by applications that were permitted to use them, and 
-  * Determine at run-time, what other interfaces can they use.
+#### AJAX: Asynchronous Javascript and XML 
+Indicates an approach for developing RIA's using a combination of web technologies that allow a browser to communicate with the server without refreshing the current page. 
+
+#### XHR : XMLHttpRequest  
+Allows asynchronous retrieval of arbitrary data from the server. It has produced an important shift in the internet default Request/Response paradigm
 
 
-#### Policy enforcements by SAINT framework : 
-  * Install-Time: An application declaring permission P defines the conditions under which P is granted to other applications at install-time. Conceptually, the an application requesting the permission P can be installed only if the policy for acquiring P is satisfied.
-  * Run-Time: Any interaction between software components within android framework involves a caller application and a callee application. The interaction is allowed to continue only if all policies supplied by both the caller and callee are satisfied.
-  * Administrative: An administrative policy dictates how policy itself can be changed.
-  * Operational: This section defines policies that detect when Saint renders an application inefficient, faulty, or inoperable, so that by restricting access to interfaces, Saint doesn't hamper utility. Past security measures that have prevented application behavior in an opaque and ambiguous way have not fared well
+#### DOM : Document Object Model
+DOM is a standard application program interface (API) for HTML and XML documents that defines the logical structure of documents and the way a document can be accessed and manipulated.
 
-#### Intent : 
-An [Intent](https://developer.android.com/reference/android/content/Intent.html) provides a facility for performing late runtime binding between the code in different applications. Its most significant use is in the launching of activities, where it can be thought of as the glue between activities. It is basically a passive data structure holding an abstract description of an action to be performed.
- 
 ## Motivation
-Smartphones are now ubiquitous even though they are new systems whose security infrastructure is largely underdeveloped.
-The existing Android operating system needs to be augmented with a framework to meet the security requirements of android applications.
-Applications statically identify the permissions that govern the rights to their data and interfaces at installation time.
-This means that the application/developer has limited ability thereafter to govern to whom those rights are given or how they are later exercised.
-Thus, a necessary utility needs to be developed for applications to assert and control the security decisions on the platform.
+The motivation of this paper stems from the differences between RIA and traditional web applications. At the presentation layer traditional web applications are form based softwares, whereas RIA's have complex asynchronous mechanisms that help them contact the server without refreshing the whole page, thanks to the AJAX engine. Such features in RIA make it difficult to fit them into a software model. This paper aims at reverse engineering one such application into an FSM.
 
 ## Sampling Procedure 
-A fictitious PersonalShopper smart-phone shopping application was chosen for explaining the drawbacks of the current Android Security Framework. This application was expected to enforce the following:
-* use only trusted payment services.
-* restricts the use of services to safe networks.
-* works only with approved versions of certain applications.
-* ensure transaction information is not leaked to the phone's ledger application.
-* allow other applications to place security restrictions on PersonalShopper.
+The subject of the experiment was an Ajax-based RIA named FilmDB that provides registered users with several functionalities for data management of a personal movie archive. The server side of this application is implemented by 99 PHP server pages (624 kBytes) that generate client pages containing several scripts (coded in Javascript) implementing a complex user
+interface. Moreover, FilmDB interacts with other server side resources by exploiting Ajax (XHR) requests.
 
-## Related Work
-Security Permissions to applications can be validated during install time or during run-time. Systems for run-time validation of Security Permissions are not very developed. Frameworks which validate permissions during install time are:
-* Kirin - enforces install policies that validate if the permissions requested by applications are consistent with the System policies.
-* Open Mobile Terminal Platform - determines an application's access rights based on its origin.
-* Symbian framework prevents unsigned applications from accessing 'protected' interfaces.
-* MIDP 2.0 Security Framework relies on the Mobile Information Device Profile implementor in giving access.
+## Informative Visualizations
 
-## Future Work
-The idea is to convert Saint from a research system to a viable framework for Android Devices. In order to do that more applications and the protection policies they require needs to be integrated into the system. The Saint policies to protect the phone system services and the cellular network needs to be extended too.
+class diagram
+Activity Diagram
+Component Diagram
+
+
+## Future Work 
+Future work includes extending the experimentation with further case-studies in order to assess the scalability of the approach. It involves addressing the adequacy of the proposed model for supporting maintenance and testing activity involving RIA's. 
 
 ## Scope for improvement :
-Even though the paper demonstrates a new Framework for addressing the security limitations in Android devices, it fails to depict the impact of this new Framework. The paper does not mention any experiments conducted on this new framework. It would have been nice to test for security issues in different applications with the existing framework and then compare the results with Saint.
+
