@@ -22,7 +22,11 @@ The motivation of this paper stems from the differences between RIA and traditio
 The subject of the experiment was an Ajax-based RIA named FilmDB that provides registered users with several functionalities for data management of a personal movie archive. The server side of this application is implemented by 99 PHP server pages (624 kBytes) that generate client pages containing several scripts (coded in Javascript) implementing a complex user
 interface. Moreover, FilmDB interacts with other server side resources by exploiting Ajax (XHR) requests.
 
-## Related Work
+## Informative Visualizations
+
+class diagram
+Activity Diagram
+Component Diagram
 
 
 ## Future Work 
