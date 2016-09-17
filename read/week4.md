@@ -24,15 +24,15 @@ interface. Moreover, FilmDB interacts with other server side resources by exploi
 
 ## Informative Visualizations
 
-1.  Class Diagram
+  * Class Diagram
 
 ![class diagram](https://github.com/arjunaugustine/fss16ASE/blob/master/read/pics/Screen%20Shot%202016-09-16%20at%2010.28.10%20PM.png)
 
-2.  Activity Diagram
+  * Activity Diagram
 
 ![activity diagram](https://github.com/arjunaugustine/fss16ASE/blob/master/read/pics/Screen%20Shot%202016-09-16%20at%2010.28.31%20PM.png)
 
-3.  Component Diagram
+  * Component Diagram
 
 ![component diagram](https://github.com/arjunaugustine/fss16ASE/blob/master/read/pics/Screen%20Shot%202016-09-16%20at%2010.28.44%20PM.png)
 
@@ -40,6 +40,4 @@ interface. Moreover, FilmDB interacts with other server side resources by exploi
 Future work includes extending the experimentation with further case-studies in order to assess the scalability of the approach. It involves addressing the adequacy of the proposed model for supporting maintenance and testing activity involving RIA's. 
 
 ## Scope for improvement :
- * The whole reverse engineering process of building a Finite State Machine from Rich Internet Applications is done solely based on just the one app which severely limits our sample space.
- * Only an FSM option is being explored in this paper, and 
-
+The whole reverse engineering process of building a Finite State Machine from Rich Internet Applications is done solely based on just the one app which severely limits our sample space. The paper doesnot mention anything about how the proposed FSM model will support the testing and maintenance activities involving RIA-s. All the states of the application have not been exhaustively mapped into the FSM model that has been developed in the paper.
