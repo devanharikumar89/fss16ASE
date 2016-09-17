@@ -1,32 +1,22 @@
-# [Semantically Rich Application-Centric Security in Android](http://www.enck.org/pubs/acsac09.pdf)
+# Reverse Engineering Finite State Machines from Rich Internet Applications
 
 ## Key Words
 
-#### Application (Security) Policies :
-Policies specified as part of Android framework that takes care of security in the system. They can govern a myriad of areas like what applications can be installed, which other applications or user can have access to what data inside another app, to whom to provide access to ones own interface and how to continue monitor fair and secure usage of the interface.
+####  RIA : Rich Internet Applications
+New generation of web applications offering greater usability and  interactivity than traditional ones, while at the same time suffering from a serious problem of lack of suitable software models to fit into.
 
-#### Secure Application INTeraction (Saint) framework:
-It extends the existing Android security architecture with policies for applications that address some key application requirements like:
-  * Control to whom permissions to use its interface can be granted,
-  * Control how its interfaces can be used by applications that were permitted to use them, and 
-  * Determine at run-time, what other interfaces can they use.
+#### AJAX: Asynchronous Javascript and XML 
+Indicates an approach for developing RIA's using a combination of web technologies that allow a browser to communicate with the server without refreshing the current page. 
+
+#### XHR : XMLHttpRequest  
+Allows asynchronous retrieval of arbitrary data from the server. It has produced an important shift in the internet default Request/Response paradigm
 
 
-#### Policy enforcements by SAINT framework : 
-  * Install-Time: An application declaring permission P defines the conditions under which P is granted to other applications at install-time. Conceptually, the an application requesting the permission P can be installed only if the policy for acquiring P is satisfied.
-  * Run-Time: Any interaction between software components within android framework involves a caller application and a callee application. The interaction is allowed to continue only if all policies supplied by both the caller and callee are satisfied.
-  * Administrative: An administrative policy dictates how policy itself can be changed.
-  * Operational: This section defines policies that detect when Saint renders an application inefficient, faulty, or inoperable, so that by restricting access to interfaces, Saint doesn't hamper utility. Past security measures that have prevented application behavior in an opaque and ambiguous way have not fared well
+#### DOM : Document Object Model
+DOM is a standard application program interface (API) for HTML and XML documents that defines the logical structure of documents and the way a document can be accessed and manipulated.
 
-#### Intent : 
-An [Intent](https://developer.android.com/reference/android/content/Intent.html) provides a facility for performing late runtime binding between the code in different applications. Its most significant use is in the launching of activities, where it can be thought of as the glue between activities. It is basically a passive data structure holding an abstract description of an action to be performed.
- 
 ## Motivation
-Smartphones are now ubiquitous even though they are new systems whose security infrastructure is largely underdeveloped.
-The existing Android operating system needs to be augmented with a framework to meet the security requirements of android applications.
-Applications statically identify the permissions that govern the rights to their data and interfaces at installation time.
-This means that the application/developer has limited ability thereafter to govern to whom those rights are given or how they are later exercised.
-Thus, a necessary utility needs to be developed for applications to assert and control the security decisions on the platform.
+The motivation of this paper stems from the differences between RIA and traditional web applications. At the presentation layer traditional web applications are form based softwares, whereas RIA's have complex asynchronous mechanisms that help them contact the server without refreshing the whole page, thanks to the AJAX engine. Such features in RIA make it difficult to fit them into a software model. This paper aims at reverse engineering one such application into an FSM.
 
 ## Sampling Procedure 
 A fictitious PersonalShopper smart-phone shopping application was chosen for explaining the drawbacks of the current Android Security Framework. This application was expected to enforce the following:
