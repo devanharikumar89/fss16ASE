@@ -25,6 +25,7 @@ interface. Moreover, FilmDB interacts with other server side resources by exploi
 ## Informative Visualizations
 
 class diagram
+![class diagram](https://github.com/arjunaugustine/fss16ASE/blob/master/read/pics/Screen%20Shot%202016-09-16%20at%2010.28.10%20PM.png)
 Activity Diagram
 Component Diagram
 
