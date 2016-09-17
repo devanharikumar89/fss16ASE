@@ -24,11 +24,17 @@ interface. Moreover, FilmDB interacts with other server side resources by exploi
 
 ## Informative Visualizations
 
-class diagram
+Class Diagram
+
 ![class diagram](https://github.com/arjunaugustine/fss16ASE/blob/master/read/pics/Screen%20Shot%202016-09-16%20at%2010.28.10%20PM.png)
+
 Activity Diagram
+
+![activity diagram](https://github.com/arjunaugustine/fss16ASE/blob/master/read/pics/Screen%20Shot%202016-09-16%20at%2010.28.31%20PM.png)
+
 Component Diagram
 
+![component diagram](https://github.com/arjunaugustine/fss16ASE/blob/master/read/pics/Screen%20Shot%202016-09-16%20at%2010.28.44%20PM.png)
 
 ## Future Work 
 Future work includes extending the experimentation with further case-studies in order to assess the scalability of the approach. It involves addressing the adequacy of the proposed model for supporting maintenance and testing activity involving RIA's. 
