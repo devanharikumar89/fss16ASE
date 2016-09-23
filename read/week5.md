@@ -1,4 +1,4 @@
-# [Semantically Rich Application-Centric Security in Android](http://www.enck.org/pubs/acsac09.pdf)
+# [Systematic Testing for Resource Leaks in Android Applications](http://web.cse.ohio-state.edu/presto/pubs/issre13.pdf)
 
 ## Key Words
 
