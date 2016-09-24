@@ -35,6 +35,10 @@ As of 2011, the android share of the smartphone market was over half which was d
 ## Baseline Results for individual Android Applications:
   * APV: The application crashes with a large native memory footprint due to incorrect implementation in native memory reclamation. 
   * ConnectBot. SSH client ConnectBot has a defect related to leaking of event listener objects.
+  * KeePassDroid. When the application is first launched, it displays a list of database files in FileSelectActivity for the user to choose. When a database file is selected, a query is launched to retrieve the information in the file, and the result can be accessed through a Cursor object. The Cursor is remembered in a container so that it can be synchronized with the activity. The Cursor object is automatically cleaned up when its managing activity is destroyed. However, when we keep the same instance of FileSelectActivity alive, and come back to the selection list to select database files repeatedly, multiple Cursor objects would be saved in FileSelectActivity.
+  * K9. In K9, a popular email client, a leak was discovered when rotating the screen after an email message is selected
+for display. Since it crashes after only a few repetitions of the ROTATE neutral cycle, this is an example of a leak that can
+be easily observed and thus cause negative user perception of the application.
 
 ## Related Work
   * Memory leak detection and diagnosis: A body of work focussing on static analyses for memory leak detection. These
