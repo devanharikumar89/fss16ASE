@@ -1,50 +1,61 @@
-# [Semantically Rich Application-Centric Security in Android](http://www.enck.org/pubs/acsac09.pdf)
+# [Systematic Testing for Resource Leaks in Android Applications](http://web.cse.ohio-state.edu/presto/pubs/issre13.pdf)
 
 ## Key Words
 
-#### Application (Security) Policies :
-Policies specified as part of Android framework that takes care of security in the system. They can govern a myriad of areas like what applications can be installed, which other applications or user can have access to what data inside another app, to whom to provide access to ones own interface and how to continue monitor fair and secure usage of the interface.
+#### Neutral Cycles :
+Sequences of GUI events that should have a “neutral” effect and should not lead to increases in resource usage. Such sequences correspond to certain cycles in the GUI model. Through multiple traversals of a neutral cycle (e.g., rotating the screen multiple times; repeated switching between apps; repeatedly opening and closing a file), a test case aims to expose leaks. This approach directly targets several common leak patterns in Android applications.
 
-#### Secure Application INTeraction (Saint) framework:
-It extends the existing Android security architecture with policies for applications that address some key application requirements like:
-  * Control to whom permissions to use its interface can be granted,
-  * Control how its interfaces can be used by applications that were permitted to use them, and 
-  * Determine at run-time, what other interfaces can they use.
+#### GUI Model:
+GUI models are directed graphs, with one node per activity, and with edges representing transitions triggered by GUI events. In addition to traditional events, the model should capture Android-specific events like pressing the home button. Several important GUI events are defined by the platform and not by the application:
+  * ROTATE events. When the user rotates the screen, the current activity is recreated with a different orientation.
+  * HOME events. When the user presses the hardware HOME button, the application is hidden.
+  * POWER events. The hardware POWER button puts the device in a low-power state.
+  * Sensor events. The platform can generate other events due to user actions. Aacceleration forces and rotational forces (triggered by the user) can be sensed by accelerometers, gravity sensors, gyroscopes, and rotational vector sensors [28]. Sensing a touch on the screen is also another user triggered sensor event.
 
+#### Test Coverage Criteria:
+. In general, for each state in the model, there is a transition representing an event. For each state, execute at least one test case that corresponds to a path and repeat the same transition. The motivation for this coverage is clear: resource usage should not increase when the neutral cycle transition is repeated even in large numbers.
+  * Application-independent cycles: One category of cycles to be covered are those events defined by the platform, not by the application.
+  * Cycles with BACK transitions: Cycles involving the hardware BACK button involve multiple activities, and present another target for coverage. This may expose leaks that depend on the interplay among several activities.
+  * Application-specific neutral operations: Cycles involving pairs of operations that “neutralize” each other, like zooming in and zooming out.
+  * Test case context: Context-sensitive variations of the coverage could also be defined, where different execution contexts for the neutral cycle need to be covered. Making such choices is very similar to defining different calling contexts for functions in code analysis and testing.
 
-#### Policy enforcements by SAINT framework : 
-  * Install-Time: An application declaring permission P defines the conditions under which P is granted to other applications at install-time. Conceptually, the an application requesting the permission P can be installed only if the policy for acquiring P is satisfied.
-  * Run-Time: Any interaction between software components within android framework involves a caller application and a callee application. The interaction is allowed to continue only if all policies supplied by both the caller and callee are satisfied.
-  * Administrative: An administrative policy dictates how policy itself can be changed.
-  * Operational: This section defines policies that detect when Saint renders an application inefficient, faulty, or inoperable, so that by restricting access to interfaces, Saint doesn't hamper utility. Past security measures that have prevented application behavior in an opaque and ambiguous way have not fared well
+#### Test case execution:
+The following resources are monitored while execution: 
+  * Java heap memory: This is the memory space used to store Java objects. There is a garbage collector, so there can be leaks only when unused objects are unnecessarily referenced.
+  * Native memory: This memory space is used by native code, and is made accessible to Java code via JNI (Java Native
+Interface) calls. It requires explicit memory management by the developers as in programs written in non-garbage-collected languages such as C/C++, and thus could suffer from all well-known memory-related defects in those languages.
+  * Binders: Binders provide an efficient inter-process communication mechanism in Android. Usage of binders requires
+creation of global JNI references, and these references are made visible to the garbage collector. Unnecessarily keeping
+these references could lead to leaking of other potentially large Java objects.
+  * Threads. Threads are usually created to perform timeconsuming operations in a GUI application to maintain good responsiveness.  A sustained growth in the number of active threads in an application is an indication of software defects.
 
-#### Intent : 
-An [Intent](https://developer.android.com/reference/android/content/Intent.html) provides a facility for performing late runtime binding between the code in different applications. Its most significant use is in the launching of activities, where it can be thought of as the glue between activities. It is basically a passive data structure holding an abstract description of an action to be performed.
- 
 ## Motivation
-Smartphones are now ubiquitous even though they are new systems whose security infrastructure is largely underdeveloped.
-The existing Android operating system needs to be augmented with a framework to meet the security requirements of android applications.
-Applications statically identify the permissions that govern the rights to their data and interfaces at installation time.
-This means that the application/developer has limited ability thereafter to govern to whom those rights are given or how they are later exercised.
-Thus, a necessary utility needs to be developed for applications to assert and control the security decisions on the platform.
+As of 2011, the android share of the smartphone market was over half which was double what it was in 2010. The android market exceeded 10 billion app downloads with a growth rate of 1 billion app downloads per month. The features of Android devices and the complexity of their software continue to grow rapidly. A few problems ever since the boom of the smartphone industry from a software engineering perspective are defects related to the limited resources, like memory, available on these devices. Improper management of resources, can lead to slowdowns, crashes, and negative user experience. But there does not exist a comprehensive and principled approach for testing for such leaks. Leaks in Android applications fortunately often follow a small number of behavioral patterns, which makes it possible to perform systematic, targeted, and effective generation of test cases to expose such leaks.
 
-## Sampling Procedure 
-A fictitious PersonalShopper smart-phone shopping application was chosen for explaining the drawbacks of the current Android Security Framework. This application was expected to enforce the following:
-* use only trusted payment services.
-* restricts the use of services to safe networks.
-* works only with approved versions of certain applications.
-* ensure transaction information is not leaked to the phone's ledger application.
-* allow other applications to place security restrictions on PersonalShopper.
+## Baseline Results for individual Android Applications:
+  * APV: The application crashes with a large native memory footprint due to incorrect implementation in native memory reclamation. 
+  * ConnectBot. SSH client ConnectBot has a defect related to leaking of event listener objects.
+  * KeePassDroid. When the application is first launched, it displays a list of database files in FileSelectActivity for the user to choose. When a database file is selected, a query is launched to retrieve the information in the file, and the result can be accessed through a Cursor object. The Cursor is remembered in a container so that it can be synchronized with the activity. The Cursor object is automatically cleaned up when its managing activity is destroyed. However, when we keep the same instance of FileSelectActivity alive, and come back to the selection list to select database files repeatedly, multiple Cursor objects would be saved in FileSelectActivity.
+  * K9. In K9, a popular email client, a leak was discovered when rotating the screen after an email message is selected
+for display. Since it crashes after only a few repetitions of the ROTATE neutral cycle, this is an example of a leak that can
+be easily observed and thus cause negative user perception of the application.
 
 ## Related Work
-Security Permissions to applications can be validated during install time or during run-time. Systems for run-time validation of Security Permissions are not very developed. Frameworks which validate permissions during install time are:
-* Kirin - enforces install policies that validate if the permissions requested by applications are consistent with the System policies.
-* Open Mobile Terminal Platform - determines an application's access rights based on its origin.
-* Symbian framework prevents unsigned applications from accessing 'protected' interfaces.
-* MIDP 2.0 Security Framework relies on the Mobile Information Device Profile implementor in giving access.
+  * Memory leak detection and diagnosis: A body of work focussing on static analyses for memory leak detection. These
+analyses typically require specification of resource management contracts/patterns, and it is an open question how
+they can be effectively used for Android software.
+  * Dynamic analyses of memory leaks, both for managed and unmanaged languages: These approaches have a shortcoming as to how can the leaking behavior be effectively triggered during testing.
+  * Model-based GUI testing. Given a GUI model, test cases can be generated based on various coverage criteria. In these approaches the focus is typically on functional correctness and the coverage criteria reflect this. In contrast, this paper
+is interested in non-functional properties, and the coverage categories we define explore specialized paths in the model
+(with multiple repetitions of a neutral cycle) in order to target common leak patterns.
+  * Random testing: For example, Hu and Neamtiu use the Monkey tool to randomly insert GUI events into a running Android application, and then analyze the execution log to detect faults. Random testing is highly unlikely to trigger
+the repeated behavior needed to observe sustained growth in resource usage.
+  * Testing and static checking for Android: Prior work has considered the use of concolic execution to generate sequences
+of events for testing of Android applications, such as testing of exception-handling code when applications are accessing unreliable resources. As an alternative to testing, static checking can identify various defects including invalid thread accesses, energy-related defects, and security vulnerabilities.
 
-## Future Work
-The idea is to convert Saint from a research system to a viable framework for Android Devices. In order to do that more applications and the protection policies they require needs to be integrated into the system. The Saint policies to protect the phone system services and the cellular network needs to be extended too.
+## Future Work:
+Important directions for future work, including additional coverage criteria; better diagnosis techniques (e.g., by correlating repeated behavior with heap growth); increased focus on analysis of native memory as well as analysis of specific
+resources (e.g., database cursors, bitmaps); automated static or dynamic discovery/analysis of code that allocates and reclaims important resources; improved resource management through new software abstractions and patterns.
 
 ## Scope for improvement :
-Even though the paper demonstrates a new Framework for addressing the security limitations in Android devices, it fails to depict the impact of this new Framework. The paper does not mention any experiments conducted on this new framework. It would have been nice to test for security issues in different applications with the existing framework and then compare the results with Saint.
+The paper doesn't consider the user driven sensor inputs that generates events. This can make a bulk of the faults and is a big shortcoming of the paper.
