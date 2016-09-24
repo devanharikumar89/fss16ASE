@@ -58,4 +58,4 @@ Important directions for future work, including additional coverage criteria; be
 resources (e.g., database cursors, bitmaps); automated static or dynamic discovery/analysis of code that allocates and reclaims important resources; improved resource management through new software abstractions and patterns.
 
 ## Scope for improvement :
-
+The paper doesn't consider the user driven sensor inputs that generates events. This can make a bulk of the faults and is a big shortcoming of the paper.
