@@ -1,22 +1,3 @@
-
-# coding: utf-8
-
-# # Genetic Algorithm Workshop
-
-# In this workshop we will code up a genetic algorithm for a simple mathematical optimization problem.
-# 
-# Genetic Algorithm is a
-# * Meta-heuristic
-# * Inspired by Natural Selection
-# * Traditionally works on binary data. Can be adopted for other data types as well.
-# 
-# You can find an example illustrating GA below
-# ![](https://github.com/timm/sbse14/wiki/etc/img/ga.jpg)
-
-# In[2]:
-
-get_ipython().magic(u'matplotlib inline')
-# All the imports
 from __future__ import print_function, division
 from math import *
 import random
@@ -165,12 +146,6 @@ class Problem(O):
             if Problem.is_valid(p):
                 return p
 
-cone = Problem()
-point = cone.generate_one()
-cone.evaluate(point)
-print(point)
-
-
 # Great. Now that the class and its basic methods is defined, we move on to code up the GA.
 # ### Population
 # First up is to create an initial population. 
@@ -180,8 +155,6 @@ print(point)
 def populate(problem, size):
     # TODO 6: Create a list of points of length 'size'
     return [problem.generate_one() for _ in xrange(size)]
-
-print(populate(cone, 5))
 
 
 # ### Crossover
@@ -195,10 +168,6 @@ def crossover(mom, dad):
     n = len(mom.decisions)
     return Point(mom.decisions[:n//2] + dad.decisions[n//2:])
 
-pop = populate(cone, 5)
-crossover(pop[0], pop[1])
-
-
 # ### Mutation
 # Randomly change a decision such that 
 
@@ -210,7 +179,7 @@ def mutate(problem, point, mutation_rate=0.01):
     # change the decision(randomly set it between its max and min).
     for i, d in enumerate(problem.decisions):
         if random.random() < mutation_rate:
-            point.decisions[1] = random_value(d.low, d.high)
+            point.decisions[i] = random_value(d.low, d.high)
     return point
 
 
@@ -231,19 +200,18 @@ def bdom(problem, one, two):
     """
     objs_one = problem.evaluate(one)
     objs_two = problem.evaluate(two)
-    dominates = False
     # TODO 9: Return True/False based on the definition
     # of bdom above.
-    if objs_one[0] <= objs_two[0] and objs_one[1] <= objs_two[1]:
-        dominates = True
-    else:
-        return False
-    if objs_one[0] == objs_two[0] or objs_one[1] == objs_two[1]:
-        dominates = dominates and True
-    else:
-        return False
-    return dominates            
-
+    
+    for i in xrange(len(objs_one)):
+        if objs_one[i] > objs_two[i]:
+            return False
+    
+    dominates = False
+    for i in xrange(len(objs_one)):
+        if objs_one[i] <= objs_two[i]:
+            dominates = True
+    return dominates
 
 # ### Fitness and Elitism
 # 
@@ -335,12 +303,4 @@ def plot_pareto(initial, final):
 
 initial, final = ga()
 plot_pareto(initial, final)
-
-
-# Here is a sample output
-# <img src="sample.png" width=300/>
-
-# In[ ]:
-
-
 
