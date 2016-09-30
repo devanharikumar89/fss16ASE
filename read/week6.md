@@ -1,38 +1,25 @@
-# [Systematic Testing for Resource Leaks in Android Applications](http://web.cse.ohio-state.edu/presto/pubs/issre13.pdf)
+# [Race Detection for Android Applications]
 
 ## Key Words
 
-#### Neutral Cycles :
-Sequences of GUI events that should have a “neutral” effect and should not lead to increases in resource usage. Such sequences correspond to certain cycles in the GUI model. Through multiple traversals of a neutral cycle (e.g., rotating the screen multiple times; repeated switching between apps; repeatedly opening and closing a file), a test case aims to expose leaks. This approach directly targets several common leak patterns in Android applications.
+#### Happens-before reasoning:
+Based on the concurrency semantics, the authors define a happens-before relation over operations in execution traces. A naïve combination of rules for asynchronous procedure calls and lock-based synchronization introduces spurious happens-before orderings. Specifically, it induces an ordering between two asynchronous tasks running on the same thread if they use the same lock. This is a spurious ordering since locks cannot enforce an ordering among tasks running sequentially on the same thread. We overcome this difficulty by decomposing the relation into (1) a thread-local happens-before relation st which captures the ordering constraints between asynchronous tasks posted to the same thread and (2) an interthread happens-before relation mt which captures the ordering constraints among multiple threads.
 
-#### GUI Model:
-GUI models are directed graphs, with one node per activity, and with edges representing transitions triggered by GUI events. In addition to traditional events, the model should capture Android-specific events like pressing the home button. Several important GUI events are defined by the platform and not by the application:
-  * ROTATE events. When the user rotates the screen, the current activity is recreated with a different orientation.
-  * HOME events. When the user presses the hardware HOME button, the application is hidden.
-  * POWER events. The hardware POWER button puts the device in a low-power state.
-  * Sensor events. The platform can generate other events due to user actions. Aacceleration forces and rotational forces (triggered by the user) can be sensed by accelerometers, gravity sensors, gyroscopes, and rotational vector sensors [28]. Sensing a touch on the screen is also another user triggered sensor event.
+#### Data Race :
+A data race occurs if there are two accesses to the same memory location, with at least one being a write, such that
+there is no happens-before ordering between them
 
-#### Test Coverage Criteria:
-. In general, for each state in the model, there is a transition representing an event. For each state, execute at least one test case that corresponds to a path and repeat the same transition. The motivation for this coverage is clear: resource usage should not increase when the neutral cycle transition is repeated even in large numbers.
-  * Application-independent cycles: One category of cycles to be covered are those events defined by the platform, not by the application.
-  * Cycles with BACK transitions: Cycles involving the hardware BACK button involve multiple activities, and present another target for coverage. This may expose leaks that depend on the interplay among several activities.
-  * Application-specific neutral operations: Cycles involving pairs of operations that “neutralize” each other, like zooming in and zooming out.
-  * Test case context: Context-sensitive variations of the coverage could also be defined, where different execution contexts for the neutral cycle need to be covered. Making such choices is very similar to defining different calling contexts for functions in code analysis and testing.
+#### DROIDRACER:
+We have implemented our race detection algorithm in a tool called D ROID R ACER . D ROID R ACER provides a framework that
+generates UI events to systematically test an Android application. It runs unmodified binaries on an instrumented Dalvik VM and instrumented Android libraries. A run of the application produces an execution trace, which is analyzed offline for data races by computing the happens-before relation. The control flow between different procedures of an Android application is managed to a large extent by the Android runtime through callbacks. D ROID R ACER uses a model of the Android runtime environment to reduce false positives that would be reported otherwise. Further, D ROID R ACER assists in debugging the data races by classifying them based on criteria such as whether one involves multiple threads posting to the same thread or two co-enabled events executing in an interleaved manner.
 
-#### Test case execution:
-The following resources are monitored while execution: 
-  * Java heap memory: This is the memory space used to store Java objects. There is a garbage collector, so there can be leaks only when unused objects are unnecessarily referenced.
-  * Native memory: This memory space is used by native code, and is made accessible to Java code via JNI (Java Native
-Interface) calls. It requires explicit memory management by the developers as in programs written in non-garbage-collected languages such as C/C++, and thus could suffer from all well-known memory-related defects in those languages.
-  * Binders: Binders provide an efficient inter-process communication mechanism in Android. Usage of binders requires
-creation of global JNI references, and these references are made visible to the garbage collector. Unnecessarily keeping
-these references could lead to leaking of other potentially large Java objects.
-  * Threads. Threads are usually created to perform timeconsuming operations in a GUI application to maintain good responsiveness.  A sustained growth in the number of active threads in an application is an indication of software defects.
+#### Execution Trace:
+Any task in the execution scenario of an android application can be divided into a sequence of more transparent and concurrency-relevant low level operations called execution traces. They are used in this paper to model the flow and execution of different android applications.
 
 ## Motivation
-As of 2011, the android share of the smartphone market was over half which was double what it was in 2010. The android market exceeded 10 billion app downloads with a growth rate of 1 billion app downloads per month. The features of Android devices and the complexity of their software continue to grow rapidly. A few problems ever since the boom of the smartphone industry from a software engineering perspective are defects related to the limited resources, like memory, available on these devices. Improper management of resources, can lead to slowdowns, crashes, and negative user experience. But there does not exist a comprehensive and principled approach for testing for such leaks. Leaks in Android applications fortunately often follow a small number of behavioral patterns, which makes it possible to perform systematic, targeted, and effective generation of test cases to expose such leaks.
+The paper speaks about a motivating example of an android application that is as ubiquitous as a media player. The paper mentions in detail the classes and threads that are involved in downloading a media from the web and playing it. Even this simple execution scenario for the music player application involves four threads running in two different processes. Moreover, much of the complex control flow and inter-thread communication in this example is managed by the Android runtime itself and is opaque to the developer. Nevertheless, the developer must understand the semantics clearly to avoid concurrency bugs. 
 
-## Baseline Results for individual Android Applications:
+## Baseline Results:
   * APV: The application crashes with a large native memory footprint due to incorrect implementation in native memory reclamation. 
   * ConnectBot. SSH client ConnectBot has a defect related to leaking of event listener objects.
   * KeePassDroid. When the application is first launched, it displays a list of database files in FileSelectActivity for the user to choose. When a database file is selected, a query is launched to retrieve the information in the file, and the result can be accessed through a Cursor object. The Cursor is remembered in a container so that it can be synchronized with the activity. The Cursor object is automatically cleaned up when its managing activity is destroyed. However, when we keep the same instance of FileSelectActivity alive, and come back to the selection list to select database files repeatedly, multiple Cursor objects would be saved in FileSelectActivity.
