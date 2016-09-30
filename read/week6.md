@@ -1,4 +1,4 @@
-# [Race Detection for Android Applications]
+# Race Detection for Android Applications
 
 ## Key Words
 
