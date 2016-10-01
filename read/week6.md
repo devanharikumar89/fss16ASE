@@ -10,7 +10,7 @@ A data race occurs if there are two accesses to the same memory location, with a
 there is no happens-before ordering between them
 
 #### DROIDRACER:
-We have implemented our race detection algorithm in a tool called D ROID R ACER . D ROID R ACER provides a framework that
+We have implemented our race detection algorithm in a tool called DROID RACER . DROID RACER provides a framework that
 generates UI events to systematically test an Android application. It runs unmodified binaries on an instrumented Dalvik VM and instrumented Android libraries. A run of the application produces an execution trace, which is analyzed offline for data races by computing the happens-before relation. The control flow between different procedures of an Android application is managed to a large extent by the Android runtime through callbacks. D ROID R ACER uses a model of the Android runtime environment to reduce false positives that would be reported otherwise. Further, D ROID R ACER assists in debugging the data races by classifying them based on criteria such as whether one involves multiple threads posting to the same thread or two co-enabled events executing in an interleaved manner.
 
 #### Execution Trace:
