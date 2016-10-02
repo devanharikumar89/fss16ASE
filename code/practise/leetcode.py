@@ -182,3 +182,39 @@ class Solution4(object):
 # s = Solution4()
 # print s.kSmallestPairs([1, 2, 4, 5, 6], [3, 5, 7, 9], 20)
 
+
+from socket import *
+serverPort = 13135
+serverSocket = socket(AF_INET, SOCK_STREAM)
+serverSocket.bind(('', serverPort))
+serverSocket.listen(1)
+print "Connected to port", serverPort
+while True:
+  connectionSocket, addr = serverSocket.accept()
+  print "Connection established!!"
+  m = connectionSocket.recv(2048)
+  print "Received Line:" + m.decode()
+  upper_m = m.decode().upper()
+  print "Upper case Message:" + upper_m
+  connectionSocket.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

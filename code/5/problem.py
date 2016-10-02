@@ -85,16 +85,16 @@ class Problem(O):
     self.decisions = []
     self.decisions.append(Decision('x1', 0, 10))
     self.decisions.append(Decision('x2', 0, 10))
-    self.decisions.append(Decision('x3', 1, 05))
-    self.decisions.append(Decision('x4', 0, 06))
-    self.decisions.append(Decision('x5', 1, 05))
+    self.decisions.append(Decision('x3', 1, 5))
+    self.decisions.append(Decision('x4', 0, 6))
+    self.decisions.append(Decision('x5', 1, 5))
     self.decisions.append(Decision('x6', 0, 10))
     self.objectives = [Objective('f1', True), Objective('f2', True)]
     self.points = []
 
   def evaluate(self, point):
-    [x1, x2, x3, x4, x5, x6] = self.decisions
-    f1 = -(25*((x1-2)**2) + (x2-2)**2 + (x3-1)**2 * (x4-4)**2 + (x5-1)**2)
+    (x1, x2, x3, x4, x5, x6) = point.decisions
+    f1 = -1*(25*((x1-2)**2) + (x2-2)**2 + (x3-1)**2 * (x4-4)**2 + (x5-1)**2)
     f2 = x1**2 + x2**2 + x3**2 + x4**2 + x5**2 + x6**2
     point.objectives = [f1, f2]
     point.energy = f1 + f2
@@ -122,14 +122,22 @@ class Problem(O):
     :return: generated point
     """
     while True:
-      mypoint = Point([random.randint(d.low, d.high) for d in self.decisions])
-      if self.is_valid(mypoint):
+      mypoint = Point([random.uniform(d.low, d.high) for d in self.decisions])
+      if self.is_valid(self, mypoint):
         self.evaluate(mypoint)
         self.points.append(mypoint)
         return mypoint
 
+  def change_decision(self, point, decision):
+    """
+    Change a random decision in the point and return a valid point
+    :param point:
+    :return: Valid changed point
+    """
+    while True:
+      mypoint = point
 
-
+    return point
 
 class MaxWalkSat(O):
   """
@@ -158,6 +166,13 @@ class MaxWalkSat(O):
     for i in xrange(self.MAX_TRIES):
       solution = problem.generate_one() # Generate and evaluate a new point.
       for j in xrange(self.MAX_CHANGES):
-        c = random.choice(solution.decisions)
+        c = random.choice(problem.decisions)
+        print c
+        if P < random.random():
+          solution = problem.change_decision(solution, c)
+          solution.decisions[int(c.name[1])-1] = random.uniform(c.low, c.high)
+          print solution.decisions
 
-
+P = Problem()
+MWS = MaxWalkSat(Problem)
+MWS.run(P)
